@@ -1,6 +1,20 @@
 version: "3.8"
 
 services:
+
+  php-apache:
+    build: ./docker
+    container_name: php_app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tasknet
+
   mysql:
     image: mysql:8
     container_name: mysql_db
@@ -12,8 +26,22 @@ services:
       MYSQL_PASSWORD: pass
     ports:
       - "3306:3306"
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - tasknet
 
 volumes:
   mysql_data:
+
+networks:
+  tasknet:
+    driver: bridge
