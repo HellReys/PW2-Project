@@ -8,6 +8,10 @@ class Task {
         $this->conn = Database::connect();
     }
 
+
+
+
+
     // Adding Tasks
     public function add($title, $description, $category_id, $user_id, $due_date) {
     $stmt = $this->conn->prepare(
@@ -15,6 +19,8 @@ class Task {
     );
     return $stmt->execute([$title, $description, $category_id, $user_id, $due_date]);
 }
+
+
 
     // Upadteing Tasks
     public function update($id, $title, $description, $category_id, $due_date) {
@@ -24,11 +30,16 @@ class Task {
     return $stmt->execute([$title, $description, $category_id, $due_date, $id]);
 }
 
+
+
     // Deleting Tasks
     public function delete($id) {
         $stmt = $this->conn->prepare("DELETE FROM tasks WHERE id=?");
         return $stmt->execute([$id]);
     }
+
+
+
 
     // Task list
     public function list($user_id) {
@@ -42,6 +53,9 @@ class Task {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+
+
     // Composite search
     public function search($user_id, $keyword) {
     $stmt = $this->conn->prepare(
@@ -54,5 +68,8 @@ class Task {
     $stmt->execute([$user_id, $like, $like]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+
 }
 ?>
