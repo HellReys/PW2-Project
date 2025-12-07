@@ -4,13 +4,11 @@ session_start();
 header('Content-Type: application/json');
 
 
-
 // Login Control
 if(!isset($_SESSION['user_id'])) {
     echo json_encode(['status'=>'error','message'=>'Login required']);
     exit;
 }
-
 
 
 // Taking json by using POST
@@ -21,7 +19,6 @@ if(!isset($data['title'], $data['description'], $data['category_id'], $data['due
     echo json_encode(['status'=>'error','message'=>'Missing fields']);
     exit;
 }
-
 
 
 $task = new Task();

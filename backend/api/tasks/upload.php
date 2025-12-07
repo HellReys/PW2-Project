@@ -26,6 +26,7 @@ $uploadDir = __DIR__ . '/../../uploads/';
 $filename = basename($_FILES['file']['name']);
 $targetFile = $uploadDir . $filename;
 
+
 // save thbe files
 if(move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)){
     // Save in DB

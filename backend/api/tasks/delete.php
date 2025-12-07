@@ -4,7 +4,6 @@ session_start();
 header('Content-Type: application/json');
 
 
-
 // Login Control
 if(!isset($_SESSION['user_id'])) {
     echo json_encode(['status'=>'error','message'=>'Login required']);
@@ -12,14 +11,15 @@ if(!isset($_SESSION['user_id'])) {
 }
 
 
-
 // Taking json by using POST
 $data = json_decode(file_get_contents("php://input"), true);
+
 
 if(!isset($data['id'])) {
     echo json_encode(['status'=>'error','message'=>'Task ID missing']);
     exit;
 }
+
 
 
 

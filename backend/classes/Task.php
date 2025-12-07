@@ -10,8 +10,6 @@ class Task {
 
 
 
-
-
     // Adding Tasks
     public function add($title, $description, $category_id, $user_id, $due_date) {
     $stmt = $this->conn->prepare(
@@ -22,12 +20,12 @@ class Task {
 
 
 
-    // Upadteing Tasks
-    public function update($id, $title, $description, $category_id, $due_date) {
+    // Updating Tasks
+    public function update($id, $title, $description, $category_id, $due_date, $status = 'pending') {
     $stmt = $this->conn->prepare(
-        "UPDATE tasks SET title=?, description=?, category_id=?, due_date=?, updated_at=NOW() WHERE id=?"
+        "UPDATE tasks SET title=?, description=?, category_id=?, due_date=?, status=?, updated_at=NOW() WHERE id=?"
     );
-    return $stmt->execute([$title, $description, $category_id, $due_date, $id]);
+    return $stmt->execute([$title, $description, $category_id, $due_date, $status, $id]);
 }
 
 
@@ -43,6 +41,9 @@ class Task {
 
     // Task list
     public function list($user_id) {
+    // First, mark any pending tasks as overdue if due date has passed
+    $this->markOverdueTasks($user_id);
+    
     $stmt = $this->conn->prepare(
         "SELECT t.id, t.title, t.description, t.due_date, t.status, c.name AS category
          FROM tasks t
@@ -53,11 +54,24 @@ class Task {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+    // Mark pending tasks as overdue if due date has passed
+    private function markOverdueTasks($user_id) {
+    $today = date('Y-m-d');
+    $stmt = $this->conn->prepare(
+        "UPDATE tasks SET status='overdue' 
+         WHERE user_id=? AND status='pending' AND due_date < ?"
+    );
+    $stmt->execute([$user_id, $today]);
+}
+
 
 
 
     // Composite search
     public function search($user_id, $keyword) {
+    // First, mark any pending tasks as overdue if due date has passed
+    $this->markOverdueTasks($user_id);
+    
     $stmt = $this->conn->prepare(
         "SELECT t.id, t.title, t.description, t.due_date, t.status, c.name AS category
          FROM tasks t

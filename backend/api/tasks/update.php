@@ -4,7 +4,6 @@ session_start();
 header('Content-Type: application/json');
 
 
-
 // Login Control
 if(!isset($_SESSION['user_id'])) {
     echo json_encode(['status'=>'error','message'=>'Login required']);
@@ -12,19 +11,26 @@ if(!isset($_SESSION['user_id'])) {
 }
 
 
-
 // Taking json by using POST
 $data = json_decode(file_get_contents("php://input"), true);
 
-if(!isset($data['id'], $data['title'], $data['description'], $data['category_id'], $data['due_date'])) {
+if(!isset($data['id'], $data['title'], $data['description'], $data['category_id'], $data['due_date'], $data['status'])) {
     echo json_encode(['status'=>'error','message'=>'Missing fields']);
     exit;
 }
 
 
+// Validate status
+$validStatuses = ['pending', 'completed', 'overdue'];
+if(!in_array($data['status'], $validStatuses)) {
+    echo json_encode(['status'=>'error','message'=>'Invalid status']);
+    exit;
+}
+
 
 $task = new Task();
-$result = $task->update($data['id'], $data['title'], $data['description'], $data['category_id'], $data['due_date']);
+$result = $task->update($data['id'], $data['title'], $data['description'], $data['category_id'], $data['due_date'], $data['status']);
+
 
 echo json_encode($result ? ['status'=>'success','message'=>'Task updated'] : ['status'=>'error','message'=>'Update failed']);
 ?>

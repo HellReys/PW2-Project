@@ -1,0 +1,238 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #F0EBD8;
+    color: #0D1321;
+    line-height: 1.5;
+}
+
+/* Hero area */
+.hero-section {
+    background: linear-gradient(120deg, #0D1321, #1D2D44);
+    padding: 90px 0;
+    text-align: center;
+    color: #F0EBD8;
+}
+
+/* Simple card style */
+.feature-card {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.15);
+    transition: 0.25s;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.20);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #3E5C76;
+}
+
+/* Dashboard box look */
+.dashboard-container {
+    min-height: 70vh;
+    padding: 25px 0;
+}
+
+.stats-card {
+    background: linear-gradient(120deg, #3E5C76, #748CAB);
+    color: #F0EBD8;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    margin-bottom: 15px;
+}
+
+.stats-card h3 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+/* Task items */
+.task-card {
+    background: #F0EBD8;
+    border-left: 5px solid #3E5C76;
+    padding: 15px;
+    margin-bottom: 12px;
+    transition: 0.2s;
+}
+
+.task-card:hover {
+    transform: translateX(5px);
+}
+
+/* manually colored statuses */
+.task-card.status-completed {
+    border-left-color: #41b66d;
+    opacity: 0.75;
+}
+
+.task-card.status-pending {
+    border-left-color: #e7b02c;
+}
+
+.task-card.status-in-progress {
+    border-left-color: #34b8d9;
+}
+
+/* Input focus looks slightly brighter */
+.form-control:focus {
+    border-color: #3E5C76;
+    box-shadow: 0 0 5px rgba(62, 92, 118, 0.4);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #3E5C76;
+    border-color: #1D2D44;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #1D2D44;
+    border-color: #0D1321;
+}
+
+/* Floating alert */
+.alert-floating {
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    background: #F0EBD8;
+    padding: 15px;
+    border-left: 4px solid #3E5C76;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    animation: showAlert 0.3s ease;
+    z-index: 999;
+}
+
+@keyframes showAlert {
+    from { opacity: 0; transform: translateX(200px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Search bar */
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding-right: 35px;
+}
+
+.search-box .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+}
+
+/* Modal top part */
+.modal-header {
+    background: linear-gradient(120deg, #0D1321, #1D2D44);
+    color: #F0EBD8;
+}
+
+/* Table hover */
+.table-hover tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Simple badges */
+.badge {
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+}
+
+/* Spinner */
+.spinner-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-border-lg {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Print styling) */
+@media print {
+    .navbar, .footer, .btn, .no-print {
+        display: none !important;
+    }
+
+    body {
+        font-size: 12pt;
+    }
+
+    .task-card {
+        border: 1px solid black;
+        page-break-inside: avoid;
+    }
+}
+
+/* More mobile friendly text size */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 45px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Light fade animation */
+.fade-in {
+    animation: fadeInSimple 0.4s;
+}
+
+@keyframes fadeInSimple {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3E5C76;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1D2D44;
+}
+
+
+
+/* Round colored dots */
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.status-indicator.pending { background-color: #e7b02c; }
+.status-indicator.in-progress { background-color: #34b8d9; }
+.status-indicator.completed { background-color: #41b66d; }
